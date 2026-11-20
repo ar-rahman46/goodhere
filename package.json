@@ -1,0 +1,21 @@
+{
+  "name": "ask-the-world",
+  "version": "1.0.0",
+  "description": "GoodHere is a small web prototype for a bigger idea: help people nearby discover and share useful local updates, even when they speak different languages.",
+  "main": "app.js",
+ "scripts": {
+  "start": "node server/server.js",
+  "dev": "node server/server.js",
+  "test": "echo \"Error: no test specified\" && exit 1"
+},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "better-sqlite3": "^13.0.3",
+    "dotenv": "^18.0.4",
+    "express": "^5.2.1",
+    "openai": "^7.23.0"
+  }
+}

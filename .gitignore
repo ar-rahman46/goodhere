@@ -1,0 +1,11 @@
+
+node_modules/
+.env
+.env.*
+!.env.example
+
+server/goodhere.db
+server/goodhere.db-shm
+server/goodhere.db-wal
+
+.DS_Store
