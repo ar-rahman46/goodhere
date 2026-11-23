@@ -1,345 +1,319 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f7f8f4">
-  <meta name="description" content="GoodHere connects neighbours through local offers, requests and community help.">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7f9f6">
 
-  <title>GoodHere — help, close by</title>
+  <title>GoodHere — Help is closer than you think</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
 
   <link rel="stylesheet" href="style.css">
+
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
 
 <body>
 
-  <!-- HEADER -->
-
+  <!-- NAVIGATION -->
   <header class="topbar">
-
-    <a class="brand" href="#top" aria-label="GoodHere home">
-      <span class="brand-mark">g</span>
-      <span>good<span class="brand-light">here</span></span>
+    <a href="#" class="brand">
+      <span class="brand-mark">G</span>
+      <span>GoodHere</span>
     </a>
 
-    <div class="location">
-
-      <span class="live-dot"></span>
-
-      <span>Viewing area</span>
-
-      <strong id="currentAreaLabel">All areas, Bengaluru</strong>
-
-      <button class="text-button" id="locationButton" type="button">
-        Change
-      </button>
-
+    <div class="topbar-location">
+      <span>📍</span>
+      <span id="currentAreaLabel">Bengaluru</span>
+      <button id="locationButton" type="button">Change</button>
     </div>
 
-    <a class="header-help-link" href="#goodHereAgent">
-      <span class="header-help-icon">✳</span>
-      <span>Ask GoodHere</span>
-    </a>
-
+    <nav class="topbar-actions">
+      <a href="#feedSection">Explore</a>
+      <a href="#goodHereAgent">AI Assistant</a>
+      <button id="shareButton" class="share-button" type="button">
+        + Share something
+      </button>
+    </nav>
   </header>
 
 
-  <main id="top">
-
-    <!-- INTRO -->
+  <!-- HERO / AI INTRODUCTION -->
+  <main>
 
     <section class="intro">
+      <div class="intro-content">
 
-      <div>
-
-        <p class="eyebrow">SMALL HELP. CLOSE BY.</p>
+        <span class="eyebrow">YOUR NEIGHBOURHOOD, CONNECTED</span>
 
         <h1>
-          Good things are<br>
-          <em>happening nearby.</em>
+          Need something?
+          <span>Good things happen nearby.</span>
         </h1>
 
         <p class="intro-copy">
-          Find a little help, or be the reason someone's day gets easier.
+          Find help, share what you have, and connect with people
+          around you. A little kindness can make a big difference.
         </p>
 
-      </div>
-
-      <button class="share-button" id="shareButton" type="button">
-        <span>＋</span>
-        Share help nearby
-      </button>
-
-    </section>
-
-
-    <!-- SEARCH -->
-
-    <section class="search-row" aria-label="Find community help">
-
-      <label class="search-box">
-
-        <span class="search-icon">⌕</span>
-
-        <input id="searchInput" type="search" placeholder="Try water, food or a helping hand"
-          aria-label="Search community posts" autocomplete="off">
-
-        <kbd>Ctrl K</kbd>
-
-      </label>
-
-      <button class="filter-button" id="filterButton" type="button">
-        <span>☷</span>
-        Filters
-        <b id="filterCount"></b>
-      </button>
-
-    </section>
-
-
-    <!-- CATEGORIES -->
-
-    <nav class="categories" aria-label="Help categories">
-
-      <button class="chip active" data-category="All" type="button">
-        ✳ <span>All help</span>
-      </button>
-
-      <button class="chip" data-category="Food & water" type="button">
-        ◒ <span>Food & water</span>
-      </button>
-
-      <button class="chip" data-category="Getting around" type="button">
-        ↗ <span>Getting around</span>
-      </button>
-
-      <button class="chip" data-category="A helping hand" type="button">
-        ♡ <span>A helping hand</span>
-      </button>
-
-      <button class="chip" data-category="Good to know" type="button">
-        ⌁ <span>Good to know</span>
-      </button>
-
-    </nav>
-
-
-    <!-- FEED AND MAP -->
-
-    <section class="content-grid">
-
-      <!-- COMMUNITY FEED -->
-
-      <div class="feed-panel">
-
-        <div class="feed-heading">
-
-          <div>
-
-            <h2>Happening around you</h2>
-
-            <p>
-              <span class="live-dot"></span>
-              Updates from your community
-              <span class="separator">·</span>
-              <span id="updateTime">just now</span>
-            </p>
-
-          </div>
-
-          <button class="sort-button" id="sortButton" type="button">
-            ↕ <span>Newest</span>
+        <div class="hero-actions">
+          <button class="share-button" type="button" onclick="document.getElementById('shareButton').click()">
+            Share with your community
           </button>
 
+          <a href="#feedSection" class="explore-link">
+            Explore nearby ↓
+          </a>
         </div>
 
-
-        <!-- NEW AREA FILTER -->
-
-        <div class="area-filter-panel">
-
-          <label for="homeAreaFilter">
-            <span>⌖</span>
-            Show updates from
-          </label>
-
-          <select id="homeAreaFilter" class="form-input">
-            <option value="All">All areas</option>
-            <option value="Indiranagar">Indiranagar</option>
-            <option value="HSR Layout">HSR Layout</option>
-            <option value="Koramangala">Koramangala</option>
-            <option value="BTM Layout">BTM Layout</option>
-            <option value="Whitefield">Whitefield</option>
-            <option value="Marathahalli">Marathahalli</option>
-            <option value="Bellandur">Bellandur</option>
-            <option value="Electronic City">Electronic City</option>
-            <option value="Hebbal">Hebbal</option>
-            <option value="Nagawara">Nagawara</option>
-            <option value="Other">Other</option>
-          </select>
-
-          <p id="areaFilterDescription">
-            Showing community updates from all areas.
-          </p>
-
+        <div class="hero-trust">
+          <span>🤝 Real people</span>
+          <span>📍 Nearby connections</span>
+          <span>💚 Community first</span>
         </div>
-
-        <!-- OFFERS / REQUESTS FILTER IS ADDED BY APP.JS -->
-
-        <div id="feed" class="feed" aria-live="polite"></div>
-
-        <p class="load-more">
-          You're all caught up
-          <span>✳</span>
-        </p>
 
       </div>
 
-
-      <!-- COMMUNITY MAP -->
-
-      <aside class="map-panel" aria-label="Community map">
-
-        <div id="goodHereMap" class="map-canvas"></div>
-
-        <div class="map-footer">
-
-          <div class="avatar-stack">
-            <span class="av av-one">M</span>
-            <span class="av av-two">R</span>
-            <span class="av av-three">S</span>
+      <div class="hero-visual">
+        <div class="hero-image">
+          <div class="hero-floating-card">
+            <span>💚</span>
+            <div>
+              <strong>Small help. Big impact.</strong>
+              <p>Good things start nearby.</p>
+            </div>
           </div>
-
-          <p>
-            <strong>Community map</strong>
-            <br>
-            <span id="mapAreaLabel">All areas</span>
-          </p>
-
-          <span class="map-footer-arrow">↗</span>
-
         </div>
-
-      </aside>
-
+      </div>
     </section>
 
 
-    <!-- FOOTER -->
+    <!-- AI ASSISTANT INTRO -->
+    <section class="community-intro">
+      <div>
+        <span class="eyebrow">MEET YOUR LOCAL COMMUNITY</span>
+        <h2>What do you need today?</h2>
+        <p>
+          Explore local offers and requests, or ask our GoodHere
+          assistant to help you find something nearby.
+        </p>
+      </div>
+    </section>
 
-    <footer class="footnote">
 
-      <span>✳</span>
+    <!-- COMMUNITY SEARCH -->
+    <section class="search-section" id="feedSection">
 
-      A neighbour-powered project. Be kind, share carefully, and check details before you go.
+      <div class="search-box">
+        <span>⌕</span>
+        <input type="search" id="searchInput" placeholder="Search food, books, help, essentials...">
+        <button id="filterButton" type="button">
+          Filters <span id="filterCount">0</span>
+        </button>
+      </div>
 
-    </footer>
+      <!-- CATEGORY FILTERS -->
+      <div class="category-chips">
+        <button class="chip active" data-category="All" type="button">All</button>
+        <button class="chip" data-category="Food & water" type="button">🍱 Food & water</button>
+        <button class="chip" data-category="Getting around" type="button">🚲 Getting around</button>
+        <button class="chip" data-category="A helping hand" type="button">🤝 A helping hand</button>
+        <button class="chip" data-category="Good to know" type="button">💡 Good to know</button>
+      </div>
+
+      <!-- OFFER / REQUEST FILTERS -->
+      <div class="community-intro">
+        <div>
+          <span class="eyebrow">COMMUNITY ACTIVITY</span>
+          <h2>What's happening nearby?</h2>
+          <p>Discover what people are sharing in your neighbourhood.</p>
+        </div>
+      </div>
+
+      <!-- FEED AND MAP -->
+      <div class="content-grid">
+
+        <section class="feed-panel">
+
+          <div class="feed-heading">
+            <div>
+              <h3>Nearby updates</h3>
+              <p id="areaFilterDescription">
+                Helpful things shared by your community
+              </p>
+            </div>
+
+            <button id="sortButton" type="button">
+              Sort
+            </button>
+          </div>
+
+          <div class="area-filter-panel">
+            <label for="homeAreaFilter">Choose neighbourhood</label>
+            <select id="homeAreaFilter">
+              <option value="All">All neighbourhoods</option>
+              <option value="HSR Layout">HSR Layout</option>
+              <option value="Koramangala">Koramangala</option>
+              <option value="BTM Layout">BTM Layout</option>
+              <option value="Indiranagar">Indiranagar</option>
+              <option value="Whitefield">Whitefield</option>
+              <option value="Marathahalli">Marathahalli</option>
+              <option value="Bellandur">Bellandur</option>
+              <option value="Electronic City">Electronic City</option>
+              <option value="Hebbal">Hebbal</option>
+              <option value="Nagawara">Nagawara</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div id="updateTime"></div>
+
+          <div id="feed">
+            <p>Loading community updates...</p>
+          </div>
+
+        </section>
+
+
+        <!-- COMMUNITY MAP -->
+        <section class="map-panel">
+
+          <div class="map-heading">
+            <div>
+              <h3>Explore your area</h3>
+              <p>Discover community activity nearby</p>
+            </div>
+
+            <span class="map-live-label">● Community map</span>
+          </div>
+
+          <div id="goodHereMap"></div>
+
+          <p class="map-note" id="mapAreaLabel">
+            Map locations are approximate neighbourhood areas.
+          </p>
+
+        </section>
+
+      </div>
+    </section>
+
+
+    <!-- COMMUNITY VALUES -->
+    <section class="values-section">
+
+      <div class="community-intro">
+        <div>
+          <span class="eyebrow">WHY GOODHERE?</span>
+          <h2>More than an app. A helpful community.</h2>
+          <p>Because sometimes the best solution is just one neighbour away.</p>
+        </div>
+      </div>
+
+      <div class="values-grid">
+
+        <article class="value-card">
+          <span>🤝</span>
+          <h3>Help each other</h3>
+          <p>Share what you have and help someone who needs it.</p>
+        </article>
+
+        <article class="value-card">
+          <span>📍</span>
+          <h3>Stay local</h3>
+          <p>Discover useful things happening around your neighbourhood.</p>
+        </article>
+
+        <article class="value-card">
+          <span>💚</span>
+          <h3>Build connections</h3>
+          <p>Make your neighbourhood a friendlier place for everyone.</p>
+        </article>
+
+      </div>
+    </section>
 
   </main>
 
 
-  <!-- SHARE POST DIALOG -->
+  <!-- FOOTER -->
+  <footer class="footnote">
+    <a href="#" class="footer-brand">GoodHere 💚</a>
+    <p>Help is closer than you think.</p>
+    <p>Share kindly. Connect safely.</p>
+  </footer>
 
+
+  <!-- SHARE POST DIALOG -->
   <dialog id="postDialog" class="dialog">
 
     <form id="postForm">
 
-      <button type="button" class="close-button" onclick="document.getElementById('postDialog').close()"
-        aria-label="Close dialog">×</button>
+      <div class="dialog-heading">
+        <div>
+          <span class="eyebrow">COMMUNITY CONTRIBUTION</span>
+          <h2>Share something helpful</h2>
+          <p>Your small contribution could make someone's day.</p>
+        </div>
 
-      <p class="eyebrow">PASS IT ON</p>
+        <button type="button" class="dialog-close" onclick="document.getElementById('postDialog').close()">×</button>
+      </div>
 
-      <h2>What can you share?</h2>
-
-      <p class="dialog-sub">
-        A little detail can make a big difference to someone nearby.
-      </p>
-
-      <label class="field-label" for="postType">
-        What would you like to do?
-      </label>
-
-      <select class="form-input" id="postType" required>
+      <label for="postType">What would you like to do?</label>
+      <select id="postType" name="type" required>
         <option value="offer">I can offer something</option>
         <option value="request">I need something</option>
       </select>
 
-      <label class="field-label" for="postTitle">
-        Give it a short title
-      </label>
+      <label for="postTitle">Title</label>
+      <input id="postTitle" name="title" type="text" placeholder="Example: Extra lunch available" required>
 
-      <input class="form-input" id="postTitle" type="text" maxlength="70" placeholder="e.g. Extra lunch packs available"
-        required>
+      <label for="postDetails">Details</label>
+      <textarea id="postDetails" name="details" placeholder="Tell your community a little more..." required></textarea>
 
-      <label class="field-label" for="postDetails">
-        Add a helpful detail
-      </label>
-
-      <textarea class="form-input" id="postDetails" rows="3" maxlength="240"
-        placeholder="Where to find it, when it's available..." required></textarea>
-
-      <label class="field-label" for="postCategory">
-        Choose a category
-      </label>
-
-      <select class="form-input" id="postCategory" required>
+      <label for="postCategory">Category</label>
+      <select id="postCategory" name="category" required>
         <option value="Food & water">Food & water</option>
         <option value="Getting around">Getting around</option>
         <option value="A helping hand">A helping hand</option>
         <option value="Good to know">Good to know</option>
       </select>
 
-      <div class="privacy-note">
-        ◎ Avoid sharing phone numbers, exact home addresses or other sensitive personal details publicly.
-      </div>
+      <p class="privacy-note">
+        🔒 For your safety, don't share your phone number or exact
+        home address publicly.
+      </p>
 
-      <div class="dialog-actions">
-
-        <button class="cancel-button" type="button" onclick="document.getElementById('postDialog').close()">
-          Maybe later
-        </button>
-
-        <button type="submit" class="submit-button" id="submitPost">
-          Share with neighbours
-          <span>→</span>
-        </button>
-
-      </div>
+      <button id="submitPost" class="share-button" type="submit">
+        Share with community
+      </button>
 
     </form>
-
   </dialog>
 
 
   <!-- NOTICE DIALOG -->
+  <dialog id="noticeDialog" class="dialog">
+    <div class="dialog-heading">
+      <h2 id="noticeTitle">GoodHere</h2>
+      <button type="button" class="dialog-close" onclick="document.getElementById('noticeDialog').close()">×</button>
+    </div>
 
-  <dialog id="noticeDialog" class="dialog notice-dialog">
+    <p id="noticeText"></p>
 
-    <form method="dialog">
-
-      <button type="button" class="close-button" onclick="document.getElementById('noticeDialog').close()"
-        aria-label="Close dialog">×</button>
-
-      <p class="eyebrow">GOODHERE</p>
-
-      <h2 id="noticeTitle">One moment</h2>
-
-      <p id="noticeText" class="dialog-sub"></p>
-
-      <button type="submit" class="submit-button notice-ok">
-        Got it
-        <span>→</span>
-      </button>
-
-    </form>
-
+    <button type="button" class="share-button" onclick="document.getElementById('noticeDialog').close()">
+      Got it
+    </button>
   </dialog>
 
 
   <!-- SCRIPTS -->
-
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="app.js"></script>
 

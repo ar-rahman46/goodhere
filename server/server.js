@@ -64,6 +64,29 @@ if (!columns.some(column => column.name === "area")) {
 }
 
 // =====================================================
+// UPDATE OLD CATEGORY NAMES
+// =====================================================
+
+db.prepare(`
+    UPDATE posts
+    SET category = 'Food & essentials'
+    WHERE category = 'Food & water'
+`).run();
+
+db.prepare(`
+    UPDATE posts
+    SET category = 'Community & local updates'
+    WHERE category = 'Good to know'
+`).run();
+
+db.prepare(`
+    UPDATE posts
+    SET category = 'Community & local updates'
+    WHERE category = 'Getting around'
+`).run();
+
+
+// =====================================================
 // DATABASE QUERIES
 // =====================================================
 
